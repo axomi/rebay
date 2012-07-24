@@ -1,8 +1,9 @@
 module Rebay
   class Finding < Rebay::Api
     BASE_URL = 'http://svcs.ebay.com/services/search/FindingService/v1'
-    VERSION = '1.0.0'
-    
+    VERSION = '1.12.0'
+    DEFAULT_SITE_ID = 0
+
     #http://developer.ebay.com/DevZone/finding/CallRef/findItemsAdvanced.html
     def find_items_advanced(params)
       raise ArgumentError unless params[:keywords] or params[:categoryId]
@@ -91,7 +92,8 @@ module Rebay
     
     private    
     def build_request_url(service, params=nil)
-      url = "#{BASE_URL}?OPERATION-NAME=#{service}&SERVICE-VERSION=#{VERSION}&SECURITY-APPNAME=#{Rebay::Api.app_id}&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD"
+      site_id = Rebay::Api.site_id || DEFAULT_SITE_ID
+      url = "#{BASE_URL}?GLOBAL-ID=#{site_id}&OPERATION-NAME=#{service}&SERVICE-VERSION=#{VERSION}&SECURITY-APPNAME=#{Rebay::Api.app_id}&RESPONSE-DATA-FORMAT=JSON&REST-PAYLOAD"
       url += build_rest_payload(params)
       return url
     end
