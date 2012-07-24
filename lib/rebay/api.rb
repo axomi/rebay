@@ -5,13 +5,22 @@ require 'uri'
 module Rebay
   class Api
     EBAY_US = 0
-  
+    EBAY_MOTORS = 100
+ 
     def self.app_id= app_id
       @@app_id = app_id
     end
     
     def self.app_id
       @@app_id
+    end
+
+    def self.site_id= site_id
+      @@site_id = site_id
+    end
+
+    def self.site_id
+      @@site_id
     end
       
     def self.configure
